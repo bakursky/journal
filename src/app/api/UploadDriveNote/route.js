@@ -2,7 +2,7 @@ import { google } from 'googleapis';
 import { NextResponse } from 'next/server';
 import { OAuth2Client } from "google-auth-library";
 import { getServerSession } from 'next-auth';
-import { authOptions } from "../auth/[...nextauth]/route";
+import { authOptions } from "../auth/auth.config";
 import { Readable } from "stream";
 
 export async function POST(req) {

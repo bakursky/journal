@@ -1,9 +1,8 @@
 import { getServerSession } from "next-auth";
 import { google } from "googleapis";
-import { authOptions } from "../auth/[...nextauth]/route";
 import { OAuth2Client } from "google-auth-library";
 import { NextResponse } from "next/server";
-
+import { authOptions } from "../auth/auth.config";
 
 
 export async function POST(request) {
