@@ -9,6 +9,8 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@fal-ai/client": "^1.2.0",
+    "@fal-ai/server-proxy": "^1.1.1",
     "date-fns": "^4.1.0",
     "google-auth-library": "^9.14.2",
     "googleapis": "^144.0.0",

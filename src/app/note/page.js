@@ -1,13 +1,15 @@
 'use client'
-
+import { signIn, signOut, useSession } from "next-auth/react";
 import { useEffect, useState } from 'react';
+import { authOptions } from "../api/auth/auth.config";
+import { redirect } from "next/navigation";
 
 export default function TextUploadForm() {
   const [selectedDate, setSelectedDate] = useState('');
   const [noteContent, setNoteContent] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [status, setStatus] = useState('');
-
+  const session = useSession(authOptions)
 
   useEffect(() => {
     const today = new Date().toISOString().split('T')[0]; // Format as YYYY-MM-DD
@@ -89,51 +91,58 @@ export default function TextUploadForm() {
 
 
   return (
-    <div className="p-6 max-w-2xl mx-auto">
-      <h1 className="text-2xl font-bold mb-4">Daily Journal</h1>
-      
-      <form onSubmit={handleSubmit}>
-        <div className="mb-4">
-          <label className="block text-sm font-medium mb-2">Select Date:</label>
-          <input
-            type="date"
-            value={selectedDate}
-            onChange={handleDateChange}
-            className="w-full p-2 border rounded"
-            required
-          />
-        </div>
-
-        <div className="mb-4">
-          <label className="block text-sm font-medium mb-2">Your Note:</label>
-          <textarea
-            value={noteContent}
-            onChange={handleContentChange}
-            className="w-full h-64 p-2 border rounded"
-            placeholder="Start writing your note..."
-            rows="10"
-            required
-          />
-        </div>
-
-        <div className="flex items-center justify-between">
-          <button 
-            type="submit"
-            className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 disabled:opacity-50"
-            disabled={isLoading}
-          >
-            {isLoading ? 'Loading...' : 'Save Note'}
-          </button>
-          
-          {status && (
-            <p className={`text-sm ${
-              status.includes('Error') ? 'text-red-500' : 'text-green-500'
-            }`}>
-              {status}
-            </p>
-          )}
-        </div>
-      </form>
+<div className="p-6 max-w-2xl mx-auto min-h-screen flex flex-col items-center justify-center">
+  <h1 className="text-2xl font-bold mb-8 text-white">Daily Journal</h1>
+  
+  <form onSubmit={handleSubmit} className="w-full max-w-md space-y-6">
+    <div className="mb-4">
+      <label className="block text-sm font-medium mb-2 text-white">Select Date:</label>
+      <input
+        type="date"
+        value={selectedDate}
+        onChange={handleDateChange}
+        className="w-full p-2 border rounded bg-transparent text-white border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+        required
+      />
     </div>
+
+    <div className="mb-4">
+      <label className="block text-sm font-medium mb-2 text-white">Your Note:</label>
+      <textarea
+        value={noteContent}
+        onChange={handleContentChange}
+        className="w-full h-64 p-2 border rounded bg-transparent text-white border-gray-300 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+        placeholder="Start writing your note..."
+        rows="10"
+        required
+      />
+    </div>
+
+    <div className="flex items-center justify-between">
+      <button 
+        type="submit"
+        className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 disabled:opacity-50"
+        disabled={isLoading}
+      >
+        {isLoading ? 'Loading...' : 'Save Note'}
+      </button>
+      
+      {status && (
+        <p className={`text-sm ${
+          status.includes('Error') ? 'text-red-500' : 'text-green-500'
+        }`}>
+          {status}
+        </p>
+      )}
+    </div>
+  </form>
+  
+  <button 
+    onClick={() => signOut("google")} 
+    className="mt-6 text-sm text-white underline hover:text-blue-500"
+  >
+    Sign out (if you have a problem with disk)
+  </button>
+</div>
   );
 }
