@@ -9,7 +9,7 @@ export default function TextUploadForm() {
   const [noteContent, setNoteContent] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [status, setStatus] = useState('');
-  const session = useSession(authOptions)
+  const { data: session } = useSession();
 
   useEffect(() => {
     const today = new Date().toISOString().split('T')[0]; // Format as YYYY-MM-DD
@@ -137,12 +137,19 @@ export default function TextUploadForm() {
     </div>
   </form>
   
-  <button 
-    onClick={() => signOut("google")} 
-    className="mt-6 text-sm text-white underline hover:text-blue-500"
-  >
-    Sign out (if you have a problem with disk)
-  </button>
+
+  {!session ? (
+     <>{redirect('/')}</>
+ 
+      ) : (
+        <button 
+        onClick={() => signOut("google")} 
+        className="mt-6 text-sm text-white underline hover:text-blue-500"
+      >
+        Sign out (if you have a problem with disk)
+      </button>
+      )}
+
 </div>
   );
 }
