@@ -6,19 +6,20 @@ export default async function RootLayout({ children }) {
   const todayDate = new Date().toISOString().split('T')[0].split('-')[2]
   
   const backgroundImageUrl = `/images/${todayDate}.jpg?cacheBuster=${Date.now()}`;
-  const noBackground = '/images/none.jpg'
+  // const noBackground = '/images/none.jpg'
   
   
   return (
     <html lang="en">
       <body
         style={{
-          backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${backgroundImageUrl}), linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url(${noBackground})`,
+          backgroundImage: backgroundImageUrl ? `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${backgroundImageUrl})` : 'none',
           backgroundSize: "cover",
           backgroundPosition: "center",
           backgroundRepeat: "no-repeat",
           backgroundAttachment: "fixed",
           minHeight: "100vh",
+          backgroundColor: backgroundImageUrl ? "black" : "white",
         }}
       >
         <div className="relative z-10">
