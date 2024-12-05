@@ -4,6 +4,8 @@ import './globals.css';
 export default async function RootLayout({ children }) {
   
   const todayDate = new Date().toISOString().split('T')[0].split('-')[2]
+  
+  const backgroundImageUrl = `/images/${todayDate}.jpg?cacheBuster=${Date.now()}`;
   const noBackground = '/images/none.jpg'
   
   
@@ -11,7 +13,7 @@ export default async function RootLayout({ children }) {
     <html lang="en">
       <body
         style={{
-          backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(/images/${todayDate}.jpg), linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url(${noBackground})`,
+          backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${backgroundImageUrl}), linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url(${noBackground})`,
           backgroundSize: "cover",
           backgroundPosition: "center",
           backgroundRepeat: "no-repeat",
